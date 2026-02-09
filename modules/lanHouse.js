@@ -8,6 +8,10 @@ export class LanHouse {
   constructor() {
     this.clientes = [];
     this.computadores = [];
+    this.client = null;
+    this.computer = null;
+
+    this.sessions = [];
   }
 
   addClient(client) {
@@ -18,7 +22,7 @@ export class LanHouse {
       // return `✅ Cliente ${client.nome} adicionado com sucesso.` porque este não funciona?
     }
     console.error(
-      '❌ Erro: O objeto fornecido não é uma instância da classe Client.'
+      '❌ Erro: Os dados fornecidos não correspondem a um cliente válido.'
     );
     return; //preciso deste return?
   }
@@ -29,8 +33,40 @@ export class LanHouse {
       return;
     }
     console.error(
-      '❌ Erro: O objeto fornecido não é uma instância da classe Computador.'
+      '❌ Erro: Os dados fornecidos não correspondem a um computador válido.'
     );
     return;
+  }
+  initSession(client, computer, horario) {
+    this.itemExist(client, 'Cliente');
+    this.itemExist(computer, 'Computador');
+
+    if(this.computer.ocupar() === false){
+      console.log(`❌ O computador ${this.computer.id} já está ocupado`);
+      return
+    }
+    this.client.initSession(horario);
+
+    this.sessions.push([this.computer, this.client]);
+    
+  }
+  itemExist(itemOnList, tipo) {
+    let objectExist = null;
+    if (tipo === 'Computador') {
+      // const objectExist = this.computadores.find(item => item.id === itemOnList) aqui eu errei, tentando declarar uma const dentro de um if
+      objectExist = this.computadores.find((item) => item.id === itemOnList);
+    } else {
+      objectExist = this.clientes.find((item) => item.nome === itemOnList);
+    }
+
+    if (objectExist === undefined) {
+      console.log(`❌ Este ${tipo} não existe.`);
+      return;
+    }
+    if (tipo === 'Computador') {
+      this.computer = objectExist;
+    } else {
+      this.client = objectExist;
+    }
   }
 }

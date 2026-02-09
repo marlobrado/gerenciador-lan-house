@@ -7,6 +7,10 @@ export class Client {
   }
 
   initSession(horarioInicio) {
+    if(!horarioInicio){
+      console.log('❌ Horario inválido')
+      return
+    }
     const [horas, minutos] = horarioInicio.split(':');
 
     let horaInicio = new Date();
@@ -14,6 +18,9 @@ export class Client {
     horaInicio.setHours(horas, minutos, 0);
 
     this.horarioInicio = horaInicio.toLocaleString('pt-BR');
+
+    let [data, horario] = this.horarioInicio.split(', ')
+    console.log(`⏳ Sessão iniciada em ${data} as ${horario}`)
     return this.horarioInicio;
   }
   endSession(horarioFim) {
