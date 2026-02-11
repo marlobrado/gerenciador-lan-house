@@ -4,6 +4,7 @@ export class Client {
     this.horarioInicio = 0;
     this.horarioFim = null;
     this.tempoTotal = null;
+    this.status = false 
   }
 
   initSession(horarioInicio) {
@@ -18,7 +19,7 @@ export class Client {
     horaInicio.setHours(horas, minutos, 0);
 
     this.horarioInicio = horaInicio.toLocaleString('pt-BR');
-
+    this.status = true
     let [data, horario] = this.horarioInicio.split(', ')
     console.log(`⏳ Sessão iniciada em ${data} as ${horario}`)
     return this.horarioInicio;
@@ -31,6 +32,9 @@ export class Client {
     horaFim.setHours(horas, minutos, 0);
 
     this.horarioFim = horaFim.toLocaleString('pt-BR');
+    this.status = false
+    let [data, horario] = this.horarioFim.split(', ')
+    console.log(`⏳ Sessão finalizada em ${data} as ${horario}`)
 
     return this.horarioFim;
   }
@@ -53,8 +57,8 @@ export class Client {
     let [horas, minutos, segundos] = fim.split(':');
 
     horas = Number(horas) * 60;
-    segundos = 0;
     minutos = Number(minutos) + horas;
+    segundos = 0;
 
     return minutos;
   }
